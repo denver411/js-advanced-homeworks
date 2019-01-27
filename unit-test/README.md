@@ -1,16 +1,39 @@
 # Домашнее задание к лекции «Unit-тестирование»
 
+**Важно**: каждая задача выполняется в виде отдельного проекта с собственным GitHub репозиторием.
+
+**Важно**: ESLint не должен выдавать ошибок.
+
+**Важно**: Jest должен обеспечивать 100% покрытие по строкам для тестируемых вами функций.
+
+**Важно**: используйте `import`/`export` а не `require`.
+
+В качестве шаблона вы можете использовать [готовый проект с лекции](https://github.com/netology-code/js-advanced-homeworks/tree/master/webpack-template).
+
 ## Описание установки
 
 ```shell
-npm init # test script: jest --coverage
-npm install --save-dev jest babel-jest babel-preset-env
+npm init
+# При инициалиализации в качестве тестовой команды указать:
+# test command: jest --coverage
+npm install --save-dev jest@23.6.0 babel-jest@23.6.0 babel-core@^7.0.0-bridge.0 @babel/core @babel/cli @babel/preset-env
 ```
 
-Создать конфиг `.babelrc`:
+Не забудьте про `.babelrc` и `.browserslistrc`.
+
+Для Jest v24 (начиная с 25 января):
+```shell
+npm init
+npm install --save-dev jest babel-jest @babel/core @babel/cli @babel/preset-env
+npm install @babel/polyfill
+```
+
+В `.babelrc`:
 ```json
 {
-    "presets": ["env"]
+  "presets": [["@babel/preset-env", {
+    "useBuiltIns": "usage"
+  }]]
 }
 ```
 
@@ -65,11 +88,7 @@ npm test
 ]
 ```
 
-Используйте соответствующие "матчеры" (список приведён на странице [Документация по expect](https://jestjs.io/docs/ru/expect). Убедитесь, что вы обеспечили 100% покрытие тестами по строкам.
-
-:::info
-В качестве результата пришлите проверяющему ссылку на ваш GitHub-проект.
-:::
+Используйте соответствующие "матчеры" (список приведён на странице [Документация по expect](https://jestjs.io/docs/ru/expect)). Убедитесь, что вы обеспечили 100% покрытие тестами по строкам.
 
 ## Задача №3 Mocking
 
@@ -86,9 +105,9 @@ export default function fetchData(url) {
 }
 ```
 
-```javascript=
+```javascript
 // Ваша функция:
-import fetchLevel from './http';
+import fetchData from './http';
 
 export function getLevel(userId) {
   const response = fetchData(`https://server/user/${userId}`);
